@@ -1,13 +1,17 @@
+const redirect = (req, res, location) => {
+  return req.method === 'POST' ? res.json({ redirect: location }) : res.redirect(location);
+};
+
 const requiresLogin = (req, res, next) => {
   if (!req.session.account) {
-    return res.redirect('/');
+    return redirect(req, res, '/');
   }
   return next();
 };
 
 const requiresLogout = (req, res, next) => {
   if (req.session.account) {
-    return res.redirect('/maker');
+    return redirect(req, res, '/maker');
   }
   return next();
 };
